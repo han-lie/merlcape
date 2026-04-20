@@ -50,7 +50,7 @@
       --subtitle-gap: -4px;
       --inner-left: clamp(11px, 1vw, 16px);
       --inner-right: clamp(28px, 2.5vw, 42px);
-      --detail-gap: 16px;
+      --detail-gap: 27px;
 
       --phase-title-font: "Cape Block Web", sans-serif;
     }
@@ -84,7 +84,6 @@
       height: calc(100vh - var(--page-pad-top) - var(--page-pad-bottom));
       margin: 0 auto;
       --arrow-top: calc(40% - (var(--arrow-height) / 2));
-      --logo-gap: calc((var(--arrow-top) - var(--logo-height)) / 2);
     }
 
     .timeline-bg {
@@ -101,8 +100,7 @@
     .brand {
       position: absolute;
       left: calc((((var(--arrow-width) - var(--tip-width)) - var(--logo-width)) / 2));
-      top: calc(var(--arrow-top) - 2px);
-      transform: translateY(-100%);
+      top: calc(var(--arrow-top) - 24px);
       width: var(--logo-width);
       aspect-ratio: var(--logo-ratio);
       z-index: 4;
@@ -118,11 +116,19 @@
     .merl-note {
       position: absolute;
       left: calc((var(--arrow-width) - var(--arrow-overlap)) * 2 + var(--inner-left));
-      top: calc(var(--arrow-top) - var(--detail-gap));
+      top: calc(var(--arrow-top) - 24px);
       transform: translateY(-100%);
       width: calc((var(--arrow-width) - var(--arrow-overlap)) * 1.8);
       z-index: 6;
       color: var(--text-dark);
+      opacity: 0;
+      transform-origin: bottom left;
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .merl-note.visible {
+      opacity: 1;
+      transform: translateY(-100%);
     }
 
     .merl-note-title {
@@ -154,7 +160,7 @@
     .goal-note {
       position: absolute;
       left: calc(var(--row-width) + 12px);
-      top: calc(var(--arrow-top) + var(--title-line-y) - 14px);
+      top: calc(var(--arrow-top) + var(--title-line-y));
       width: calc(var(--right-space) - 12px);
       z-index: 6;
       color: var(--text-dark);
@@ -169,15 +175,16 @@
     }
 
     .goal-title {
-      margin: 0 0 4px;
+      margin: 0;
       font-family: var(--phase-title-font);
       font-size: clamp(18.72px, 2.124vw, 25.92px);
       line-height: 1;
       color: var(--cape-red);
+      transform: translateY(-50%);
     }
 
     .goal-copy {
-      margin: 0;
+      margin: 4px 0 0;
       font-size: clamp(13px, 1.35vw, 16px);
       line-height: 1.18;
       font-weight: 400;
@@ -420,7 +427,7 @@
         <img src="./americares-logo.png" alt="Americares logo" />
       </div>
 
-      <div class="merl-note">
+      <div class="merl-note" id="merl-note">
         <p class="merl-note-title">MERL Supplement to CAPE</p>
         <p class="merl-note-links">
           Partner with
@@ -431,7 +438,7 @@
       </div>
 
       <div class="goal-note" id="goal-note">
-        <p class="goal-title">Goal</p>
+        <p class="goal-title">Goal...</p>
         <p class="goal-copy">utilize data from Phase 5 to inform next Phase 1, creating a cyclical process</p>
       </div>
 
@@ -470,7 +477,7 @@
               <a class="phase-title-link" href="https://americares.sharepoint.com/:p:/g/acteams/programteam/PAT/IQBE7iaykrF4TYiX3fTEL71AAUEgBTDV1wk6CTlPCVdfs5U?e=r1tIov&nav=eyJzSWQiOjU4MiwiY0lkIjoyODgxNzc0OTQxfQ" target="_blank" rel="noopener noreferrer">
                 <h2 class="phase-title"><span class="phase-title-cape">CAPE </span><span class="phase-title-phase">Phase 3</span></h2>
               </a>
-              <p class="phase-subtitle">Planning and Pre-Implementation Phase<br><span class="paren">(if awarded)</span></p>
+              <p class="phase-subtitle">Planning and Pre-Implementation Phase <span class="paren">(if awarded)</span></p>
             </div>
           </div>
         </article>
@@ -537,6 +544,7 @@
       const phases = document.querySelectorAll(".phase-col");
       const detailBlocks = document.querySelectorAll(".detail-block");
       const goalNote = document.getElementById("goal-note");
+      const merlNote = document.getElementById("merl-note");
 
       function setActivePhase(nextPhase) {
         const key = nextPhase ? nextPhase.dataset.detail : "";
@@ -552,6 +560,9 @@
         const delay = Number(phase.dataset.delay || 0);
         window.setTimeout(() => {
           phase.classList.add("visible");
+          if (phase.classList.contains("phase-3")) {
+            merlNote.classList.add("visible");
+          }
         }, delay);
       });
 
