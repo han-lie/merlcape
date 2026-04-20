@@ -24,7 +24,8 @@
       --text-light: #ffffff;
       --cape-red: #f04a36;
       --americares-blue: #2d75ba;
-      --link-hover: #2d75ba;
+      --americares-yellow: #ffd36a;
+      --link-hover: #5a98d7;
       --bg-blue: #d8e6f5;
 
       --page-pad-x: clamp(18px, 2.6vw, 40px);
@@ -46,7 +47,7 @@
 
       --quote-top: clamp(14px, 1.7vh, 20px);
       --title-line-y: calc(var(--arrow-height) * 0.5);
-      --subtitle-gap: 2px;
+      --subtitle-gap: 1px;
       --inner-left: clamp(11px, 1vw, 16px);
       --inner-right: clamp(28px, 2.5vw, 42px);
       --detail-gap: 16px;
@@ -87,10 +88,10 @@
     }
 
     .timeline-bg {
-      position: absolute;
+      position: fixed;
       top: 0;
       bottom: 0;
-      left: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
+      left: calc(var(--page-pad-x) + ((var(--arrow-width) - var(--arrow-overlap)) * 2));
       right: 0;
       background: var(--bg-blue);
       z-index: 0;
@@ -145,7 +146,7 @@
 
     .merl-note-links a:hover,
     .merl-note-links a:focus-visible {
-      color: var(--americares-blue);
+      color: var(--phase3);
       text-decoration: none;
     }
 
@@ -156,6 +157,14 @@
       width: calc(var(--right-space) - 12px);
       z-index: 6;
       color: var(--text-dark);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .goal-note.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .goal-title {
@@ -236,7 +245,7 @@
 
     .arrow-link:hover,
     .arrow-link:focus-visible {
-      color: var(--link-hover);
+      color: var(--americares-yellow);
     }
 
     .intro,
@@ -251,7 +260,7 @@
     .intro {
       top: var(--quote-top);
       margin: 0;
-      font-size: clamp(15px, 1.55vw, 18px);
+      font-size: clamp(13.5px, 1.395vw, 16.2px);
       line-height: 1.16;
       font-style: italic;
       font-weight: 400;
@@ -272,7 +281,7 @@
 
     .phase-title-link:hover,
     .phase-title-link:focus-visible {
-      color: var(--link-hover);
+      color: var(--americares-yellow);
       text-decoration: none;
     }
 
@@ -290,16 +299,16 @@
     }
 
     .phase-title-cape {
-      font-size: clamp(26px, 2.95vw, 36px);
+      font-size: clamp(23.4px, 2.655vw, 32.4px);
     }
 
     .phase-title-phase {
-      font-size: clamp(20.8px, 2.36vw, 28.8px);
+      font-size: clamp(18.72px, 2.124vw, 25.92px);
     }
 
     .phase-subtitle {
       margin: var(--subtitle-gap) 0 0;
-      font-size: clamp(15px, 1.55vw, 18px);
+      font-size: clamp(13.5px, 1.395vw, 16.2px);
       line-height: 1.16;
       max-width: none;
       font-weight: 700;
@@ -391,7 +400,7 @@
 
     .detail-block a:hover,
     .detail-block a:focus-visible {
-      color: var(--americares-blue);
+      color: var(--phase3);
       text-decoration: none;
     }
 
@@ -402,10 +411,10 @@
   </style>
 </head>
 <body>
+  <div class="timeline-bg" aria-hidden="true"></div>
+
   <section class="cape-wrap" aria-label="CAPE project phases">
     <div class="layout">
-      <div class="timeline-bg" aria-hidden="true"></div>
-
       <div class="brand">
         <img src="./americares-logo.png" alt="Americares logo" />
       </div>
@@ -420,7 +429,7 @@
         </p>
       </div>
 
-      <div class="goal-note">
+      <div class="goal-note" id="goal-note">
         <p class="goal-title">Goal</p>
         <p class="goal-copy">utilize data from Phase 5 to inform Phase 1, creating a cyclical process</p>
       </div>
@@ -526,6 +535,7 @@
     (function () {
       const phases = document.querySelectorAll(".phase-col");
       const detailBlocks = document.querySelectorAll(".detail-block");
+      const goalNote = document.getElementById("goal-note");
 
       function setActivePhase(nextPhase) {
         const key = nextPhase ? nextPhase.dataset.detail : "";
@@ -544,7 +554,13 @@
         window.setTimeout(() => {
           phase.classList.add("visible");
         }, delay);
+      });
 
+      window.setTimeout(() => {
+        goalNote.classList.add("visible");
+      }, 2250);
+
+      phases.forEach((phase) => {
         phase.addEventListener("mouseenter", () => setActivePhase(phase));
         phase.addEventListener("focusin", () => setActivePhase(phase));
         phase.addEventListener("click", () => setActivePhase(phase));
