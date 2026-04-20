@@ -46,6 +46,7 @@
       --subtitle-gap: 10px;
       --inner-left: clamp(12px, 1.2vw, 18px);
       --inner-right: clamp(22px, 2.2vw, 34px);
+      --detail-gap: 18px;
 
       --phase-title-font: "Cape Block Web", sans-serif;
     }
@@ -260,43 +261,71 @@
       color: var(--text-light);
     }
 
-    .hover-detail {
+    .detail-panel {
       position: absolute;
-      top: calc(100% + var(--logo-gap));
-      left: var(--inner-left);
-      width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left));
-      max-width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left));
+      top: calc(40% + (var(--arrow-height) / 2) + var(--detail-gap));
+      left: 0;
+      right: 0;
+      z-index: 25;
+      color: #000;
       font-size: clamp(13px, 1.35vw, 16px);
       line-height: 1.14;
       font-weight: 400;
-      color: #000000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 180ms ease;
-      pointer-events: none;
-      z-index: 20;
+      min-height: 120px;
     }
 
-    .phase-col.active .hover-detail {
+    .detail-block {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .detail-block.active {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
 
-    .hover-detail p {
+    .detail-phase-2 {
+      left: calc((var(--arrow-width) - var(--arrow-overlap)) * 1 + var(--inner-left));
+      width: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
+      max-width: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
+    }
+
+    .detail-phase-3 {
+      left: calc((var(--arrow-width) - var(--arrow-overlap)) * 2 + var(--inner-left));
+      width: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
+      max-width: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
+    }
+
+    .detail-phase-4 {
+      left: calc((var(--arrow-width) - var(--arrow-overlap)) * 3 + var(--inner-left));
+      width: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
+      max-width: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
+    }
+
+    .detail-phase-5 {
+      left: calc((var(--arrow-width) - var(--arrow-overlap)) * 4 + var(--inner-left));
+      width: calc(var(--arrow-width) - var(--inner-left));
+      max-width: calc(var(--arrow-width) - var(--inner-left));
+    }
+
+    .detail-block p {
       margin: 0 0 10px;
       font-weight: 400;
     }
 
-    .hover-detail a {
+    .detail-block a {
       color: inherit;
       text-decoration: none;
       font-weight: 400;
       transition: color 160ms ease;
     }
 
-    .hover-detail a:hover,
-    .hover-detail a:focus-visible {
+    .detail-block a:hover,
+    .detail-block a:focus-visible {
       color: var(--link-hover);
       text-decoration: none;
     }
@@ -312,7 +341,7 @@
       </div>
 
       <div class="timeline-row">
-        <article class="phase-col phase-1" data-delay="0">
+        <article class="phase-col phase-1" data-delay="0" data-detail="">
           <div class="phase-card">
             <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-1.aspx" aria-label="CAPE Phase 1 arrow"></a>
             <p class="intro">"I have a Proposal"</p>
@@ -325,7 +354,7 @@
           </div>
         </article>
 
-        <article class="phase-col phase-2" data-delay="450">
+        <article class="phase-col phase-2" data-delay="450" data-detail="phase-2">
           <div class="phase-card">
             <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-2.aspx" aria-label="CAPE Phase 2 arrow"></a>
             <p class="intro">"How do I prepare my Proposal for approval"</p>
@@ -336,18 +365,9 @@
               <p class="phase-subtitle">Proposal Development Phase</p>
             </div>
           </div>
-          <div class="hover-detail">
-            <p>Where are you getting the funds?</p>
-            <p>Request funds from donors</p>
-            <p>
-              <a href="https://americares.sharepoint.com/:b:/g/acteams/Finance/IQCFpUnVMSypToA8inpEadADAeU1X_i5RepZryRvOI4ZJRo?e=YCgDfI" target="_blank" rel="noopener noreferrer">
-                Request ERPx funding source
-              </a>
-            </p>
-          </div>
         </article>
 
-        <article class="phase-col phase-3" data-delay="900">
+        <article class="phase-col phase-3" data-delay="900" data-detail="phase-3">
           <div class="phase-card">
             <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-3.aspx" aria-label="CAPE Phase 3 arrow"></a>
             <p class="intro">"My Proposal is approved to be a Project, now what?"</p>
@@ -363,7 +383,7 @@
           </div>
         </article>
 
-        <article class="phase-col phase-4" data-delay="1350">
+        <article class="phase-col phase-4" data-delay="1350" data-detail="phase-4">
           <div class="phase-card">
             <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-4.aspx" aria-label="CAPE Phase 4 arrow"></a>
             <p class="intro">"My Project has officially started, now what?"</p>
@@ -374,31 +394,9 @@
               <p class="phase-subtitle">Implementation &amp; Monitoring Phase</p>
             </div>
           </div>
-          <div class="hover-detail">
-            <p>
-              <a href="https://americares.outsystemsenterprise.com/UserMaintenance/AMCUsers.aspx" target="_blank" rel="noopener noreferrer">
-                1. Request Tableau access if needed
-              </a>
-            </p>
-            <p>
-              <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
-                2. Confirm and correct Project details in org-wide dashboards
-              </a>
-            </p>
-            <p>
-              <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
-                3. For TA Projects: enter Activity-level data in Scope Activity app at Activity end (do not wait for Project end)
-              </a>
-            </p>
-            <p>
-              <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
-                4. For TA Projects: Monitor Activity data in dashboard to ensure accuracy and timeliness
-              </a>
-            </p>
-          </div>
         </article>
 
-        <article class="phase-col phase-5" data-delay="1800">
+        <article class="phase-col phase-5" data-delay="1800" data-detail="phase-5">
           <div class="phase-card">
             <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-5.aspx" aria-label="CAPE Phase 5 arrow"></a>
             <p class="intro">"My Project has officially ended, now what?"</p>
@@ -411,16 +409,99 @@
           </div>
         </article>
       </div>
+
+      <div class="detail-panel" aria-live="polite">
+        <div class="detail-block detail-phase-2" data-detail-panel="phase-2">
+          <p>Where are you getting the funds?</p>
+          <p>Request funds from donors</p>
+          <p>
+            <a href="https://americares.sharepoint.com/:b:/g/acteams/Finance/IQCFpUnVMSypToA8inpEadADAeU1X_i5RepZryRvOI4ZJRo?e=YCgDfI" target="_blank" rel="noopener noreferrer">
+              Request ERPx funding source
+            </a>
+          </p>
+        </div>
+
+        <div class="detail-block detail-phase-3" data-detail-panel="phase-3">
+          <p>
+            <a href="https://americares.sharepoint.com/acteams/programteam/MandE/Lists/PDW%20Request%20Form/AllItems.aspx" target="_blank" rel="noopener noreferrer">
+              1. Create a PDW
+            </a>
+          </p>
+          <p>
+            <a href="https://americares.sharepoint.com/acteams/programteam/PAT/Lists/CdRqst/Item/newifs.aspx" target="_blank" rel="noopener noreferrer">
+              2. Request an ERPx Project Code
+            </a>
+          </p>
+          <p>
+            <a href="https://americares.sharepoint.com/:b:/g/acteams/programteam/PAT/IQDlcHv31l6-R5c0EPwsTf2lAf38rlR9Vj54i-lN8jIBxBA?e=RXq89A" target="_blank" rel="noopener noreferrer">
+              3. Create a Blackbaud TA Project if implemented by Americares staff
+            </a>
+          </p>
+          <p>
+            <a href="https://americares.sharepoint.com/:b:/g/acteams/programteam/MandE/IQApTNmq0TCRRJLA4suARd5NAfOuewQd7qB53INgz499iXU?e=Z64gKo" target="_blank" rel="noopener noreferrer">
+              4. Guidance on when to create a new TA Project
+            </a>
+          </p>
+        </div>
+
+        <div class="detail-block detail-phase-4" data-detail-panel="phase-4">
+          <p>
+            <a href="https://americares.outsystemsenterprise.com/UserMaintenance/AMCUsers.aspx" target="_blank" rel="noopener noreferrer">
+              1. Request Tableau access if needed
+            </a>
+          </p>
+          <p>
+            <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
+              2. Confirm and correct Project details in org-wide dashboards
+            </a>
+          </p>
+          <p>
+            <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
+              3. For TA Projects: enter Activity-level data in Scope Activity app at Activity end (do not wait for Project end)
+            </a>
+          </p>
+          <p>
+            <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
+              4. For TA Projects: Monitor Activity data in dashboard to ensure accuracy and timeliness
+            </a>
+          </p>
+        </div>
+
+        <div class="detail-block detail-phase-5" data-detail-panel="phase-5">
+          <p>
+            <a href="https://prod-useast-a.online.tableau.com/t/americares/views/FY26ProjectsandBeneficiaries/ProjectList" target="_blank" rel="noopener noreferrer">
+              1. Confirm and correct Project details in org-wide dashboards at Project end
+            </a>
+          </p>
+          <p>
+            <a href="https://prod-useast-a.online.tableau.com/t/americares/views/FY26ProjectsandBeneficiaries/ProjectList" target="_blank" rel="noopener noreferrer">
+              2. For Cash Grants (implemented by Partners), confirm Grantee has submitted final Beneficiary numbers in dashboards
+            </a>
+          </p>
+          <p>
+            <a href="https://forms.office.com/r/NK51vpU1X8?origin=lprLink" target="_blank" rel="noopener noreferrer">
+              3. Submit Data Requests to receive MERL answers to aggregation requests
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
   <script>
     (function () {
       const phases = document.querySelectorAll(".phase-col");
+      const detailBlocks = document.querySelectorAll(".detail-block");
 
       function setActivePhase(nextPhase) {
+        const key = nextPhase ? nextPhase.dataset.detail : "";
+
         phases.forEach((phase) => {
           phase.classList.toggle("active", phase === nextPhase);
+        });
+
+        detailBlocks.forEach((block) => {
+          block.classList.toggle("active", block.dataset.detailPanel === key);
         });
       }
 
