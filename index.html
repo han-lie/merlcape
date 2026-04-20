@@ -23,6 +23,7 @@
       --text-dark: #111827;
       --text-light: #ffffff;
       --cape-red: #f04a36;
+      --americares-blue: #2d75ba;
       --link-hover: #ffd36a;
       --bg-blue: #d8e6f5;
 
@@ -43,9 +44,9 @@
 
       --quote-top: clamp(16px, 2vh, 24px);
       --title-line-y: calc(var(--arrow-height) * 0.5);
-      --subtitle-gap: 10px;
+      --subtitle-gap: 5px;
       --inner-left: clamp(12px, 1.2vw, 18px);
-      --inner-right: clamp(22px, 2.2vw, 34px);
+      --inner-right: clamp(34px, 3vw, 52px);
       --detail-gap: 18px;
 
       --phase-title-font: "Cape Block Web", sans-serif;
@@ -187,8 +188,8 @@
     .intro {
       top: var(--quote-top);
       margin: 0;
-      font-size: clamp(13px, 1.35vw, 16px);
-      line-height: 1.14;
+      font-size: clamp(15px, 1.55vw, 18px);
+      line-height: 1.16;
       font-style: italic;
       font-weight: 400;
       text-wrap: balance;
@@ -235,10 +236,11 @@
 
     .phase-subtitle {
       margin: var(--subtitle-gap) 0 0;
-      font-size: clamp(13px, 1.35vw, 16px);
-      line-height: 1.14;
+      font-size: clamp(15px, 1.55vw, 18px);
+      line-height: 1.16;
       max-width: none;
       font-weight: 700;
+      text-wrap: pretty;
     }
 
     .phase-subtitle .paren {
@@ -269,7 +271,7 @@
       z-index: 25;
       color: #000;
       font-size: clamp(13px, 1.35vw, 16px);
-      line-height: 1.14;
+      line-height: 1.18;
       font-weight: 400;
       min-height: 120px;
     }
@@ -326,8 +328,13 @@
 
     .detail-block a:hover,
     .detail-block a:focus-visible {
-      color: var(--link-hover);
+      color: var(--americares-blue);
       text-decoration: none;
+    }
+
+    .detail-num {
+      color: var(--cape-red);
+      font-weight: 700;
     }
   </style>
 </head>
@@ -375,10 +382,7 @@
               <a class="phase-title-link" href="https://americares.sharepoint.com/:p:/g/acteams/programteam/PAT/IQBE7iaykrF4TYiX3fTEL71AAUEgBTDV1wk6CTlPCVdfs5U?e=r1tIov&nav=eyJzSWQiOjU4MiwiY0lkIjoyODgxNzc0OTQxfQ" target="_blank" rel="noopener noreferrer">
                 <h2 class="phase-title"><span class="phase-title-cape">CAPE </span><span class="phase-title-phase">Phase 3</span></h2>
               </a>
-              <p class="phase-subtitle">
-                Planning and Pre-Implementation Phase<br />
-                <span class="paren">(if awarded)</span>
-              </p>
+              <p class="phase-subtitle">Planning and Pre-Implementation Phase<br><span class="paren">(if awarded)</span></p>
             </div>
           </div>
         </article>
@@ -422,67 +426,23 @@
         </div>
 
         <div class="detail-block detail-phase-3" data-detail-panel="phase-3">
-          <p>
-            <a href="https://americares.sharepoint.com/acteams/programteam/MandE/Lists/PDW%20Request%20Form/AllItems.aspx" target="_blank" rel="noopener noreferrer">
-              1. Create a PDW
-            </a>
-          </p>
-          <p>
-            <a href="https://americares.sharepoint.com/acteams/programteam/PAT/Lists/CdRqst/Item/newifs.aspx" target="_blank" rel="noopener noreferrer">
-              2. Request an ERPx Project Code
-            </a>
-          </p>
-          <p>
-            <a href="https://americares.sharepoint.com/:b:/g/acteams/programteam/PAT/IQDlcHv31l6-R5c0EPwsTf2lAf38rlR9Vj54i-lN8jIBxBA?e=RXq89A" target="_blank" rel="noopener noreferrer">
-              3. Create a Blackbaud TA Project if implemented by Americares staff
-            </a>
-          </p>
-          <p>
-            <a href="https://americares.sharepoint.com/:b:/g/acteams/programteam/MandE/IQApTNmq0TCRRJLA4suARd5NAfOuewQd7qB53INgz499iXU?e=Z64gKo" target="_blank" rel="noopener noreferrer">
-              4. Guidance on when to create a new TA Project
-            </a>
-          </p>
+          <p><a href="https://americares.sharepoint.com/acteams/programteam/MandE/Lists/PDW%20Request%20Form/AllItems.aspx" target="_blank" rel="noopener noreferrer"><span class="detail-num">1</span> Create a PDW</a></p>
+          <p><a href="https://americares.sharepoint.com/acteams/programteam/PAT/Lists/CdRqst/Item/newifs.aspx" target="_blank" rel="noopener noreferrer"><span class="detail-num">2</span> Request an ERPx Project Code</a></p>
+          <p><a href="https://americares.sharepoint.com/:b:/g/acteams/programteam/PAT/IQDlcHv31l6-R5c0EPwsTf2lAf38rlR9Vj54i-lN8jIBxBA?e=RXq89A" target="_blank" rel="noopener noreferrer"><span class="detail-num">3</span> Create a Blackbaud TA Project if implemented by Americares staff</a></p>
+          <p><a href="https://americares.sharepoint.com/:b:/g/acteams/programteam/MandE/IQApTNmq0TCRRJLA4suARd5NAfOuewQd7qB53INgz499iXU?e=Z64gKo" target="_blank" rel="noopener noreferrer"><span class="detail-num">4</span> Guidance on when to create a new TA Project</a></p>
         </div>
 
         <div class="detail-block detail-phase-4" data-detail-panel="phase-4">
-          <p>
-            <a href="https://americares.outsystemsenterprise.com/UserMaintenance/AMCUsers.aspx" target="_blank" rel="noopener noreferrer">
-              1. Request Tableau access if needed
-            </a>
-          </p>
-          <p>
-            <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
-              2. Confirm and correct Project details in org-wide dashboards
-            </a>
-          </p>
-          <p>
-            <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
-              3. For TA Projects: enter Activity-level data in Scope Activity app at Activity end (do not wait for Project end)
-            </a>
-          </p>
-          <p>
-            <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
-              4. For TA Projects: Monitor Activity data in dashboard to ensure accuracy and timeliness
-            </a>
-          </p>
+          <p><a href="https://americares.outsystemsenterprise.com/UserMaintenance/AMCUsers.aspx" target="_blank" rel="noopener noreferrer"><span class="detail-num">1</span> Request Tableau access if needed</a></p>
+          <p><a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer"><span class="detail-num">2</span> Confirm and correct Project details in org-wide dashboards</a></p>
+          <p><a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer"><span class="detail-num">3</span> For TA Projects: enter Activity-level data in Scope Activity app at Activity end (do not wait for Project end)</a></p>
+          <p><a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer"><span class="detail-num">4</span> For TA Projects: Monitor Activity data in dashboard to ensure accuracy and timeliness</a></p>
         </div>
 
         <div class="detail-block detail-phase-5" data-detail-panel="phase-5">
-          <p>
-            <a href="https://prod-useast-a.online.tableau.com/t/americares/views/FY26ProjectsandBeneficiaries/ProjectList" target="_blank" rel="noopener noreferrer">
-              1. Confirm and correct Project details in org-wide dashboards at Project end
-            </a>
-          </p>
-          <p>
-            <a href="https://prod-useast-a.online.tableau.com/t/americares/views/FY26ProjectsandBeneficiaries/ProjectList" target="_blank" rel="noopener noreferrer">
-              2. For Cash Grants (implemented by Partners), confirm Grantee has submitted final Beneficiary numbers in dashboards
-            </a>
-          </p>
-          <p>
-            <a href="https://forms.office.com/r/NK51vpU1X8?origin=lprLink" target="_blank" rel="noopener noreferrer">
-              3. Submit Data Requests to receive MERL answers to aggregation requests
-            </a>
-          </p>
+          <p><a href="https://prod-useast-a.online.tableau.com/t/americares/views/FY26ProjectsandBeneficiaries/ProjectList" target="_blank" rel="noopener noreferrer"><span class="detail-num">1</span> Confirm and correct Project details in org-wide dashboards at Project end</a></p>
+          <p><a href="https://prod-useast-a.online.tableau.com/t/americares/views/FY26ProjectsandBeneficiaries/ProjectList" target="_blank" rel="noopener noreferrer"><span class="detail-num">2</span> For Cash Grants (implemented by Partners), confirm Grantee has submitted final Beneficiary numbers in dashboards</a></p>
+          <p><a href="https://forms.office.com/r/NK51vpU1X8?origin=lprLink" target="_blank" rel="noopener noreferrer"><span class="detail-num">3</span> Submit Data Requests to receive MERL answers to aggregation requests</a></p>
         </div>
       </div>
     </div>
