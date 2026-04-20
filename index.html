@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAPE Timeline Embed</title>
+  <style>
+    :root {
+      --logo-blue: #2d75ba;
+      --phase1: #d8e6f5;
+      --phase2: #a9c8ea;
+      --phase3: #5a98d7;
+      --phase4: #2f69a5;
+      --phase5: #1f4a77;
+      --text-dark: #111827;
+      --text-light: #ffffff;
+      --link-hover: #ffd36a;
+
+      --page-pad: clamp(20px, 4vw, 56px);
+      --brand-col: minmax(170px, 240px);
+      --phase-height: clamp(220px, 23vw, 300px);
+      --phase-gap: clamp(-22px, -1.8vw, -10px);
+      --tip: clamp(54px, 4.6vw, 76px);
+      --body-max: 1600px;
+      --split: 42%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text-dark);
+      background: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .cape-wrap {
+      position: relative;
+      width: 100%;
+      max-width: var(--body-max);
+      margin: 0 auto;
+      padding: 22px var(--page-pad) 34px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .cape-wrap::before,
+    .cape-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+
+    .cape-wrap::before {
+      background:
+        linear-gradient(
+          to right,
+          #ffffff 0,
+          #ffffff var(--split),
+          #dce9f7 var(--split),
+          #dce9f7 100%
+        );
+    }
+
+    .brand {
+      width: clamp(130px, 12vw, 175px);
+      margin: 0 0 18px 0;
+    }
+
+    .brand img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(190px, 1fr));
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .phase-col {
+      position: relative;
+      min-width: 0;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .phase-col + .phase-col {
+      margin-left: var(--phase-gap);
+    }
+
+    .phase-col.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .phase-card {
+      position: relative;
+      min-height: var(--phase-height);
+      padding: 22px clamp(16px, 1.8vw, 24px) 24px;
+      clip-path: polygon(0 0, calc(100% - var(--tip)) 0, 100% 50%, calc(100% - var(--tip)) 100%, 0 100%);
+      overflow: hidden;
+    }
+
+    .phase-1 .phase-card { background: var(--phase1); }
+    .phase-2 .phase-card { background: var(--phase2); }
+    .phase-3 .phase-card { background: var(--phase3); }
+    .phase-4 .phase-card { background: var(--phase4); }
+    .phase-5 .phase-card { background: var(--phase5); }
+
+    .arrow-link {
+      position: absolute;
+      inset: 0;
+      display: block;
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+      z-index: 1;
+      transition: color 180ms ease;
+    }
+
+    .arrow-link:hover,
+    .arrow-link:focus-visible {
+      color: var(--link-hover);
+    }
+
+    .phase-body {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: calc(var(--phase-height) - 46px);
+      padding-right: calc(var(--tip) + 10px);
+    }
+
+    .intro {
+      margin: 0;
+      font-size: clamp(15px, 1.45vw, 19px);
+      line-height: 1.22;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      max-width: 18ch;
+    }
+
+    .title-wrap {
+      margin-top: 18px;
+    }
+
+    .phase-title {
+      margin: 0 0 4px;
+      font-size: clamp(24px, 2.05vw, 36px);
+      line-height: 1.02;
+      font-weight: 700;
+    }
+
+    .phase-subtitle {
+      margin: 0;
+      font-size: clamp(15px, 1.5vw, 19px);
+      line-height: 1.16;
+      max-width: 16ch;
+    }
+
+    .phase-1 .arrow-link,
+    .phase-1 .intro,
+    .phase-2 .arrow-link,
+    .phase-2 .intro {
+      color: var(--text-dark);
+    }
+
+    .phase-3 .arrow-link,
+    .phase-3 .intro,
+    .phase-4 .arrow-link,
+    .phase-4 .intro,
+    .phase-5 .arrow-link,
+    .phase-5 .intro {
+      color: var(--text-light);
+    }
+
+    .hover-detail {
+      min-height: 74px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      line-height: 1.42;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 200ms ease, transform 200ms ease;
+      pointer-events: none;
+    }
+
+    .phase-col.hovering .hover-detail,
+    .phase-col:focus-within .hover-detail {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .phase-4 .hover-detail,
+    .phase-5 .hover-detail {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+
+    .hover-detail strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1080px) {
+      .timeline-row {
+        grid-template-columns: repeat(5, minmax(180px, 1fr));
+      }
+
+      .phase-col + .phase-col {
+        margin-left: -10px;
+      }
+
+      .phase-body {
+        padding-right: calc(var(--tip) + 2px);
+      }
+    }
+
+    @media (max-width: 860px) {
+      html,
+      body {
+        overflow-x: auto;
+      }
+
+      .cape-wrap {
+        min-width: 1080px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="cape-wrap" aria-label="CAPE project phases">
+    <div class="brand">
+      <img src="/sites/yoursite/SiteAssets/americares-logo.png" alt="Americares logo" />
+    </div>
+
+    <div class="timeline-row">
+      <article class="phase-col phase-1" data-delay="0">
+        <div class="phase-card">
+          <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-1.aspx" aria-label="CAPE Phase 1"></a>
+          <div class="phase-body">
+            <p class="intro">"I have a Proposal"</p>
+            <div class="title-wrap">
+              <h2 class="phase-title">CAPE Phase 1</h2>
+              <p class="phase-subtitle">Go/No-Go Phase</p>
+            </div>
+          </div>
+        </div>
+        <div class="hover-detail">
+          <strong>Phase 1 details</strong>
+          Add your Phase 1 hover copy here later.
+        </div>
+      </article>
+
+      <article class="phase-col phase-2" data-delay="450">
+        <div class="phase-card">
+          <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-2.aspx" aria-label="CAPE Phase 2"></a>
+          <div class="phase-body">
+            <p class="intro">"How do I prepare my Proposal for approval"</p>
+            <div class="title-wrap">
+              <h2 class="phase-title">CAPE Phase 2</h2>
+              <p class="phase-subtitle">Proposal Development Phase</p>
+            </div>
+          </div>
+        </div>
+        <div class="hover-detail">
+          <strong>Phase 2 details</strong>
+          Add your Phase 2 hover copy here later.
+        </div>
+      </article>
+
+      <article class="phase-col phase-3" data-delay="900">
+        <div class="phase-card">
+          <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-3.aspx" aria-label="CAPE Phase 3"></a>
+          <div class="phase-body">
+            <p class="intro">"My Proposal is approved to be a Project, now what?"</p>
+            <div class="title-wrap">
+              <h2 class="phase-title">CAPE Phase 3</h2>
+              <p class="phase-subtitle">Planning and Pre-Implementation Phase (if awarded)</p>
+            </div>
+          </div>
+        </div>
+        <div class="hover-detail">
+          <strong>Phase 3 details</strong>
+          Add your Phase 3 hover copy here later.
+        </div>
+      </article>
+
+      <article class="phase-col phase-4" data-delay="1350">
+        <div class="phase-card">
+          <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-4.aspx" aria-label="CAPE Phase 4"></a>
+          <div class="phase-body">
+            <p class="intro">"My Project has officially started, now what?"</p>
+            <div class="title-wrap">
+              <h2 class="phase-title">CAPE Phase 4</h2>
+              <p class="phase-subtitle">Implementation &amp; Monitoring Phase</p>
+            </div>
+          </div>
+        </div>
+        <div class="hover-detail">
+          <strong>Phase 4 details</strong>
+          Add your Phase 4 hover copy here later.
+        </div>
+      </article>
+
+      <article class="phase-col phase-5" data-delay="1800">
+        <div class="phase-card">
+          <a class="arrow-link" href="/sites/yoursite/SitePages/cape-phase-5.aspx" aria-label="CAPE Phase 5"></a>
+          <div class="phase-body">
+            <p class="intro">"My Project has officially ended, now what?"</p>
+            <div class="title-wrap">
+              <h2 class="phase-title">CAPE Phase 5</h2>
+              <p class="phase-subtitle">Project Wrap up &amp; Knowledge Mgmt</p>
+            </div>
+          </div>
+        </div>
+        <div class="hover-detail">
+          <strong>Phase 5 details</strong>
+          Add your Phase 5 hover copy here later.
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const phases = document.querySelectorAll(".phase-col");
+
+      phases.forEach((phase) => {
+        const delay = Number(phase.dataset.delay || 0);
+        window.setTimeout(() => {
+          phase.classList.add("visible");
+        }, delay);
+
+        phase.addEventListener("mouseenter", () => phase.classList.add("hovering"));
+        phase.addEventListener("mouseleave", () => phase.classList.remove("hovering"));
+      });
+    })();
+  </script>
+</body>
+</html>
