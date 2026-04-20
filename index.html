@@ -22,17 +22,17 @@
       --page-pad-bottom: 36px;
 
       --logo-width: 170px;
-      --logo-gap: 34px;
+      --logo-bottom-gap: 24px;
 
       --arrow-width: 286px;
       --arrow-height: 300px;
       --arrow-overlap: 28px;
       --tip-width: 78px;
 
-      --quote-top: 58px;
-      --title-top: 166px;
+      --quote-top: 22px;
+      --title-top: 144px;
       --inner-left: 18px;
-      --inner-right: 92px;
+      --inner-right: 44px;
     }
 
     * {
@@ -62,14 +62,15 @@
 
     .layout {
       position: relative;
-      min-width: calc(var(--logo-width) + var(--logo-gap) + (var(--arrow-width) * 5) - (var(--arrow-overlap) * 4));
+      min-width: calc(var(--arrow-width) * 5 - (var(--arrow-overlap) * 4));
+      padding-top: calc(198px + var(--logo-bottom-gap));
     }
 
     .timeline-bg {
       position: absolute;
-      top: -160px;
+      top: 0;
       bottom: calc(-100vh - 40px);
-      left: calc(var(--logo-width) + var(--logo-gap) + ((var(--arrow-width) - var(--arrow-overlap)) * 2));
+      left: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
       right: calc(var(--page-pad-x) * -1);
       background: #dce9f7;
       z-index: 0;
@@ -77,9 +78,11 @@
     }
 
     .brand {
+      position: absolute;
+      top: 0;
+      left: calc((var(--arrow-width) - var(--logo-width)) / 2);
       width: var(--logo-width);
-      margin: 0 0 22px 0;
-      position: relative;
+      margin: 0;
       z-index: 2;
     }
 
@@ -94,7 +97,7 @@
       z-index: 2;
       display: flex;
       align-items: flex-start;
-      margin-left: calc(var(--logo-width) + var(--logo-gap));
+      margin-left: 0;
     }
 
     .phase-col {
@@ -165,6 +168,7 @@
       font-size: 17px;
       line-height: 1.25;
       font-weight: 500;
+      max-width: none;
     }
 
     .title-wrap {
@@ -183,7 +187,7 @@
       margin: 8px 0 0;
       font-size: 16px;
       line-height: 1.14;
-      max-width: 15ch;
+      max-width: none;
     }
 
     .phase-1 .arrow-link,
@@ -243,9 +247,9 @@
         --arrow-width: 254px;
         --arrow-height: 280px;
         --tip-width: 70px;
-        --quote-top: 50px;
-        --title-top: 154px;
-        --inner-right: 82px;
+        --quote-top: 20px;
+        --title-top: 134px;
+        --inner-right: 40px;
       }
 
       .intro {
