@@ -100,7 +100,7 @@
     .brand {
       position: absolute;
       left: calc((((var(--arrow-width) - var(--tip-width)) - var(--logo-width)) / 2));
-      top: calc(var(--arrow-top) - 24px);
+      top: calc(var(--arrow-top) - 24px - var(--logo-height));
       width: var(--logo-width);
       aspect-ratio: var(--logo-ratio);
       z-index: 4;
@@ -165,7 +165,7 @@
       z-index: 6;
       color: var(--text-dark);
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(0);
       transition: opacity 520ms ease, transform 520ms ease;
     }
 
