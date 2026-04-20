@@ -24,6 +24,7 @@
       --text-light: #ffffff;
       --cape-red: #f04a36;
       --link-hover: #ffd36a;
+      --hover-link-blue: #0b63ce;
       --bg-blue: #d8e6f5;
 
       --page-pad-x: clamp(18px, 2.6vw, 40px);
@@ -31,6 +32,9 @@
       --page-pad-bottom: clamp(14px, 2vh, 24px);
 
       --logo-width: clamp(130px, 12.1vw, 185px);
+      --logo-ratio: 1.132;
+      --logo-height: calc(var(--logo-width) / var(--logo-ratio));
+
       --arrow-overlap: clamp(14px, 1.4vw, 28px);
       --tip-width: clamp(52px, 5vw, 78px);
 
@@ -76,6 +80,7 @@
       height: calc(100vh - var(--page-pad-top) - var(--page-pad-bottom));
       margin: 0 auto;
       --arrow-top: calc(40% - (var(--arrow-height) / 2));
+      --logo-gap: calc((var(--arrow-top) - var(--logo-height)) / 2);
     }
 
     .timeline-bg {
@@ -92,16 +97,17 @@
     .brand {
       position: absolute;
       left: calc((((var(--arrow-width) - var(--tip-width)) - var(--logo-width)) / 2));
-      top: calc(var(--arrow-top) / 2);
+      top: var(--logo-gap);
       width: var(--logo-width);
-      transform: translateY(-50%);
+      aspect-ratio: var(--logo-ratio);
       z-index: 4;
     }
 
     .brand img {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
     }
 
     .timeline-row {
@@ -174,7 +180,7 @@
       position: absolute;
       left: var(--inner-left);
       right: var(--inner-right);
-      z-index: 10;
+      z-index: 12;
       pointer-events: none;
     }
 
@@ -194,7 +200,7 @@
 
     .phase-title {
       margin: 0;
-      font-size: clamp(22px, 2.45vw, 30px);
+      font-size: clamp(26px, 2.95vw, 36px);
       line-height: 1;
       font-weight: 400;
       white-space: nowrap;
@@ -237,47 +243,43 @@
 
     .hover-detail {
       position: absolute;
-      top: calc(var(--quote-top) + 54px);
+      top: calc(100% + var(--logo-gap));
       left: var(--inner-left);
-      width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left) - var(--inner-right));
-      max-width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left) - var(--inner-right));
+      width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left));
+      max-width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left));
       font-size: clamp(13px, 1.35vw, 16px);
       line-height: 1.14;
-      font-weight: 700;
-      color: var(--text-dark);
+      font-weight: 400;
+      color: #000000;
       opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 180ms ease, transform 180ms ease;
+      visibility: hidden;
+      transition: opacity 180ms ease;
       pointer-events: none;
       z-index: 20;
     }
 
-    .hover-detail-wide {
-      width: calc(var(--arrow-width) * 2 - var(--inner-left));
-      max-width: calc(var(--arrow-width) * 2 - var(--inner-left));
-    }
-
-    .phase-col.hovering .hover-detail,
-    .phase-col:focus-within .hover-detail {
+    .phase-col.active .hover-detail {
       opacity: 1;
-      transform: translateY(0);
+      visibility: visible;
       pointer-events: auto;
-    }
-
-    .phase-4 .hover-detail,
-    .phase-5 .hover-detail {
-      color: var(--text-light);
     }
 
     .hover-detail p {
       margin: 0 0 10px;
+      font-weight: 400;
     }
 
     .hover-detail a {
       color: inherit;
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 160ms ease;
+    }
+
+    .hover-detail a:hover,
+    .hover-detail a:focus-visible {
+      color: var(--hover-link-blue);
+      text-decoration: none;
     }
   </style>
 </head>
@@ -345,7 +347,7 @@
               <p class="phase-subtitle">Implementation &amp; Monitoring Phase</p>
             </div>
           </div>
-          <div class="hover-detail hover-detail-wide">
+          <div class="hover-detail">
             <p>
               <a href="https://americares.outsystemsenterprise.com/UserMaintenance/AMCUsers.aspx" target="_blank" rel="noopener noreferrer">
                 1. Request Tableau access if needed
@@ -387,14 +389,21 @@
     (function () {
       const phases = document.querySelectorAll(".phase-col");
 
+      function setActivePhase(nextPhase) {
+        phases.forEach((phase) => {
+          phase.classList.toggle("active", phase === nextPhase);
+        });
+      }
+
       phases.forEach((phase) => {
         const delay = Number(phase.dataset.delay || 0);
         window.setTimeout(() => {
           phase.classList.add("visible");
         }, delay);
 
-        phase.addEventListener("mouseenter", () => phase.classList.add("hovering"));
-        phase.addEventListener("mouseleave", () => phase.classList.remove("hovering"));
+        phase.addEventListener("mouseenter", () => setActivePhase(phase));
+        phase.addEventListener("focusin", () => setActivePhase(phase));
+        phase.addEventListener("click", () => setActivePhase(phase));
       });
     })();
   </script>
