@@ -14,25 +14,28 @@
 
       --text-dark: #111827;
       --text-light: #ffffff;
+      --cape-red: #f04a36;
       --link-hover: #ffd36a;
+      --bg-blue: #dce9f7;
 
-      --wrap-max: 1600px;
-      --page-pad-x: 56px;
-      --page-pad-top: 18px;
-      --page-pad-bottom: 36px;
+      --page-pad-x: clamp(18px, 2.6vw, 40px);
+      --page-pad-top: clamp(10px, 1.4vh, 18px);
+      --page-pad-bottom: clamp(14px, 2vh, 24px);
 
-      --logo-width: 170px;
-      --logo-bottom-gap: 24px;
+      --logo-width: clamp(118px, 11vw, 168px);
+      --logo-zone: clamp(120px, 19vh, 185px);
 
-      --arrow-width: 286px;
-      --arrow-height: 300px;
-      --arrow-overlap: 28px;
-      --tip-width: 78px;
+      --arrow-overlap: clamp(14px, 1.4vw, 28px);
+      --tip-width: clamp(52px, 5vw, 78px);
 
-      --quote-top: 22px;
-      --title-top: 144px;
-      --inner-left: 18px;
-      --inner-right: 44px;
+      --content-width: calc(100vw - (var(--page-pad-x) * 2));
+      --arrow-width: calc((var(--content-width) + (var(--arrow-overlap) * 4)) / 5);
+      --arrow-height: calc(100vh - var(--page-pad-top) - var(--page-pad-bottom) - var(--logo-zone));
+
+      --quote-top: clamp(16px, 2vh, 24px);
+      --title-line-y: calc(var(--arrow-height) * 0.52);
+      --inner-left: clamp(12px, 1.2vw, 18px);
+      --inner-right: clamp(22px, 2.2vw, 34px);
     }
 
     * {
@@ -42,48 +45,51 @@
     html,
     body {
       margin: 0;
-      min-height: 100%;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       font-family: Arial, Helvetica, sans-serif;
       background: #ffffff;
       color: var(--text-dark);
     }
 
     body {
-      overflow-x: auto;
+      position: relative;
     }
 
     .cape-wrap {
       position: relative;
-      max-width: var(--wrap-max);
-      margin: 0 auto;
+      width: 100vw;
+      height: 100vh;
       padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
-      overflow: visible;
+      overflow: hidden;
     }
 
     .layout {
       position: relative;
-      min-width: calc(var(--arrow-width) * 5 - (var(--arrow-overlap) * 4));
-      padding-top: calc(198px + var(--logo-bottom-gap));
+      width: var(--content-width);
+      height: calc(100vh - var(--page-pad-top) - var(--page-pad-bottom));
+      margin: 0 auto;
     }
 
     .timeline-bg {
       position: absolute;
-      top: 0;
-      bottom: calc(-100vh - 40px);
+      top: calc(var(--page-pad-top) * -1);
+      bottom: calc(var(--page-pad-bottom) * -1);
       left: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
       right: calc(var(--page-pad-x) * -1);
-      background: #dce9f7;
+      background: var(--bg-blue);
       z-index: 0;
       pointer-events: none;
     }
 
     .brand {
       position: absolute;
-      top: 0;
-      left: calc((var(--arrow-width) - var(--logo-width)) / 2);
+      top: 50%;
+      left: calc((((var(--arrow-width) - var(--tip-width)) - var(--logo-width)) / 2));
       width: var(--logo-width);
-      margin: 0;
-      z-index: 2;
+      transform: translateY(calc((-1 * var(--arrow-height) / 2) - 50%));
+      z-index: 4;
     }
 
     .brand img {
@@ -93,11 +99,13 @@
     }
 
     .timeline-row {
-      position: relative;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 2;
       display: flex;
       align-items: flex-start;
-      margin-left: 0;
     }
 
     .phase-col {
@@ -159,110 +167,58 @@
       position: absolute;
       left: var(--inner-left);
       right: var(--inner-right);
-      z-index: 2;
+      z-index: 10;
+      pointer-events: none;
     }
 
     .intro {
       top: var(--quote-top);
       margin: 0;
-      font-size: 17px;
-      line-height: 1.25;
+      font-size: clamp(13px, 1.45vw, 17px);
+      line-height: 1.22;
       font-weight: 500;
-      max-width: none;
+      text-wrap: balance;
     }
 
     .title-wrap {
-      top: var(--title-top);
+      top: var(--title-line-y);
+      transform: translateY(-50%);
     }
 
     .phase-title {
       margin: 0;
-      font-size: 25px;
+      font-size: clamp(18px, 2.05vw, 25px);
       line-height: 1;
       font-weight: 700;
       white-space: nowrap;
+      color: var(--cape-red);
     }
 
     .phase-subtitle {
       margin: 8px 0 0;
-      font-size: 16px;
+      font-size: clamp(13px, 1.35vw, 16px);
       line-height: 1.14;
       max-width: none;
     }
 
-    .phase-1 .arrow-link,
     .phase-1 .intro,
-    .phase-2 .arrow-link,
-    .phase-2 .intro {
+    .phase-2 .intro,
+    .phase-1 .phase-subtitle,
+    .phase-2 .phase-subtitle {
       color: var(--text-dark);
     }
 
-    .phase-3 .arrow-link,
     .phase-3 .intro,
-    .phase-4 .arrow-link,
     .phase-4 .intro,
-    .phase-5 .arrow-link,
-    .phase-5 .intro {
+    .phase-5 .intro,
+    .phase-3 .phase-subtitle,
+    .phase-4 .phase-subtitle,
+    .phase-5 .phase-subtitle {
       color: var(--text-light);
     }
 
     .hover-detail {
-      min-height: 74px;
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.55);
-      font-size: 13px;
-      line-height: 1.42;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 200ms ease, transform 200ms ease;
-      pointer-events: none;
-      max-width: 240px;
-    }
-
-    .phase-col.hovering .hover-detail,
-    .phase-col:focus-within .hover-detail {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .phase-4 .hover-detail,
-    .phase-5 .hover-detail {
-      background: rgba(255, 255, 255, 0.14);
-      color: #fff;
-    }
-
-    .hover-detail strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 1280px) {
-      :root {
-        --logo-width: 150px;
-        --arrow-width: 254px;
-        --arrow-height: 280px;
-        --tip-width: 70px;
-        --quote-top: 20px;
-        --title-top: 134px;
-        --inner-right: 40px;
-      }
-
-      .intro {
-        font-size: 16px;
-      }
-
-      .phase-title {
-        font-size: 22px;
-      }
-
-      .phase-subtitle {
-        font-size: 15px;
-      }
+      display: none;
     }
   </style>
 </head>
@@ -285,10 +241,6 @@
               <p class="phase-subtitle">Go/No-Go Phase</p>
             </div>
           </div>
-          <div class="hover-detail">
-            <strong>Phase 1 details</strong>
-            Add your Phase 1 hover copy here later.
-          </div>
         </article>
 
         <article class="phase-col phase-2" data-delay="450">
@@ -299,10 +251,6 @@
               <h2 class="phase-title">CAPE Phase 2</h2>
               <p class="phase-subtitle">Proposal Development Phase</p>
             </div>
-          </div>
-          <div class="hover-detail">
-            <strong>Phase 2 details</strong>
-            Add your Phase 2 hover copy here later.
           </div>
         </article>
 
@@ -315,10 +263,6 @@
               <p class="phase-subtitle">Planning and Pre-Implementation Phase (if awarded)</p>
             </div>
           </div>
-          <div class="hover-detail">
-            <strong>Phase 3 details</strong>
-            Add your Phase 3 hover copy here later.
-          </div>
         </article>
 
         <article class="phase-col phase-4" data-delay="1350">
@@ -330,10 +274,6 @@
               <p class="phase-subtitle">Implementation &amp; Monitoring Phase</p>
             </div>
           </div>
-          <div class="hover-detail">
-            <strong>Phase 4 details</strong>
-            Add your Phase 4 hover copy here later.
-          </div>
         </article>
 
         <article class="phase-col phase-5" data-delay="1800">
@@ -344,10 +284,6 @@
               <h2 class="phase-title">CAPE Phase 5</h2>
               <p class="phase-subtitle">Project Wrap up &amp; Knowledge Mgmt</p>
             </div>
-          </div>
-          <div class="hover-detail">
-            <strong>Phase 5 details</strong>
-            Add your Phase 5 hover copy here later.
           </div>
         </article>
       </div>
@@ -363,9 +299,6 @@
         window.setTimeout(() => {
           phase.classList.add("visible");
         }, delay);
-
-        phase.addEventListener("mouseenter", () => phase.classList.add("hovering"));
-        phase.addEventListener("mouseleave", () => phase.classList.remove("hovering"));
       });
     })();
   </script>
