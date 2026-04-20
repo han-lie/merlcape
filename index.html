@@ -10,7 +10,7 @@
       --phase2: #a9c8ea;
       --phase3: #5a98d7;
       --phase4: #2f69a5;
-      --phase5: #1f4a77;
+      --phase5: #18385b;
 
       --text-dark: #111827;
       --text-light: #ffffff;
@@ -30,10 +30,11 @@
 
       --content-width: calc(100vw - (var(--page-pad-x) * 2));
       --arrow-width: calc((var(--content-width) + (var(--arrow-overlap) * 4)) / 5);
-      --arrow-height: calc(100vh - var(--page-pad-top) - var(--page-pad-bottom) - var(--logo-zone));
+      --arrow-height: clamp(220px, 34vh, 300px);
 
       --quote-top: clamp(16px, 2vh, 24px);
-      --title-line-y: calc(var(--arrow-height) * 0.52);
+      --title-line-y: calc(var(--arrow-height) * 0.56);
+      --subtitle-gap: 8px;
       --inner-left: clamp(12px, 1.2vw, 18px);
       --inner-right: clamp(22px, 2.2vw, 34px);
     }
@@ -51,10 +52,6 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #ffffff;
       color: var(--text-dark);
-    }
-
-    body {
-      position: relative;
     }
 
     .cape-wrap {
@@ -182,7 +179,6 @@
 
     .title-wrap {
       top: var(--title-line-y);
-      transform: translateY(-50%);
     }
 
     .phase-title {
@@ -192,10 +188,11 @@
       font-weight: 700;
       white-space: nowrap;
       color: var(--cape-red);
+      transform: translateY(-50%);
     }
 
     .phase-subtitle {
-      margin: 8px 0 0;
+      margin: calc(var(--subtitle-gap) - 2px) 0 0;
       font-size: clamp(13px, 1.35vw, 16px);
       line-height: 1.14;
       max-width: none;
