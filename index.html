@@ -32,7 +32,7 @@
       --page-pad-top: clamp(10px, 1.4vh, 18px);
       --page-pad-bottom: clamp(14px, 2vh, 24px);
 
-      --logo-width: clamp(118px, 10.8vw, 168px);
+      --logo-width: clamp(130px, 11.9vw, 185px);
       --logo-ratio: 1.132;
       --logo-height: calc(var(--logo-width) / var(--logo-ratio));
 
@@ -47,7 +47,7 @@
 
       --quote-top: clamp(14px, 1.7vh, 20px);
       --title-line-y: calc(var(--arrow-height) * 0.5);
-      --subtitle-gap: 1px;
+      --subtitle-gap: -4px;
       --inner-left: clamp(11px, 1vw, 16px);
       --inner-right: clamp(28px, 2.5vw, 42px);
       --detail-gap: 16px;
@@ -101,7 +101,8 @@
     .brand {
       position: absolute;
       left: calc((((var(--arrow-width) - var(--tip-width)) - var(--logo-width)) / 2));
-      top: var(--logo-gap);
+      top: calc(var(--arrow-top) - 2px);
+      transform: translateY(-100%);
       width: var(--logo-width);
       aspect-ratio: var(--logo-ratio);
       z-index: 4;
@@ -170,7 +171,7 @@
     .goal-title {
       margin: 0 0 4px;
       font-family: var(--phase-title-font);
-      font-size: clamp(20.8px, 2.36vw, 28.8px);
+      font-size: clamp(18.72px, 2.124vw, 25.92px);
       line-height: 1;
       color: var(--cape-red);
     }
@@ -431,7 +432,7 @@
 
       <div class="goal-note" id="goal-note">
         <p class="goal-title">Goal</p>
-        <p class="goal-copy">utilize data from Phase 5 to inform Phase 1, creating a cyclical process</p>
+        <p class="goal-copy">utilize data from Phase 5 to inform next Phase 1, creating a cyclical process</p>
       </div>
 
       <div class="timeline-row">
@@ -539,11 +540,9 @@
 
       function setActivePhase(nextPhase) {
         const key = nextPhase ? nextPhase.dataset.detail : "";
-
         phases.forEach((phase) => {
           phase.classList.toggle("active", phase === nextPhase);
         });
-
         detailBlocks.forEach((block) => {
           block.classList.toggle("active", block.dataset.detailPanel === key);
         });
