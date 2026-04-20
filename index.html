@@ -24,30 +24,32 @@
       --text-light: #ffffff;
       --cape-red: #f04a36;
       --americares-blue: #2d75ba;
-      --link-hover: #ffd36a;
+      --link-hover: #2d75ba;
       --bg-blue: #d8e6f5;
 
       --page-pad-x: clamp(18px, 2.6vw, 40px);
       --page-pad-top: clamp(10px, 1.4vh, 18px);
       --page-pad-bottom: clamp(14px, 2vh, 24px);
 
-      --logo-width: clamp(130px, 12.1vw, 185px);
+      --logo-width: clamp(118px, 10.8vw, 168px);
       --logo-ratio: 1.132;
       --logo-height: calc(var(--logo-width) / var(--logo-ratio));
 
-      --arrow-overlap: clamp(14px, 1.4vw, 28px);
-      --tip-width: clamp(52px, 5vw, 78px);
+      --arrow-overlap: clamp(12px, 1.2vw, 24px);
+      --tip-width: clamp(46px, 4.2vw, 68px);
 
       --content-width: calc(100vw - (var(--page-pad-x) * 2));
-      --arrow-width: calc((var(--content-width) + (var(--arrow-overlap) * 4)) / 5);
-      --arrow-height: clamp(220px, 34vh, 300px);
+      --arrow-width: calc((var(--content-width) + (var(--arrow-overlap) * 4)) * 3 / 17);
+      --right-space: calc(var(--arrow-width) * 0.6667);
+      --row-width: calc((var(--arrow-width) * 5) - (var(--arrow-overlap) * 4));
+      --arrow-height: clamp(200px, calc(var(--arrow-width) * 0.96), 260px);
 
-      --quote-top: clamp(16px, 2vh, 24px);
+      --quote-top: clamp(14px, 1.7vh, 20px);
       --title-line-y: calc(var(--arrow-height) * 0.5);
       --subtitle-gap: 2px;
-      --inner-left: clamp(12px, 1.2vw, 18px);
-      --inner-right: clamp(34px, 3vw, 52px);
-      --detail-gap: 18px;
+      --inner-left: clamp(11px, 1vw, 16px);
+      --inner-right: clamp(28px, 2.5vw, 42px);
+      --detail-gap: 16px;
 
       --phase-title-font: "Cape Block Web", sans-serif;
     }
@@ -86,10 +88,10 @@
 
     .timeline-bg {
       position: absolute;
-      top: calc(var(--page-pad-top) * -1);
-      bottom: calc(var(--page-pad-bottom) * -1);
+      top: 0;
+      bottom: 0;
       left: calc((var(--arrow-width) - var(--arrow-overlap)) * 2);
-      right: calc(var(--page-pad-x) * -1);
+      right: 0;
       background: var(--bg-blue);
       z-index: 0;
       pointer-events: none;
@@ -114,8 +116,9 @@
     .merl-note {
       position: absolute;
       left: calc((var(--arrow-width) - var(--arrow-overlap)) * 2 + var(--inner-left));
-      bottom: calc(100% - var(--logo-gap) - var(--logo-height));
-      transform: translateY(100%);
+      top: calc(var(--arrow-top) - var(--detail-gap));
+      transform: translateY(-100%);
+      width: calc((var(--arrow-width) - var(--arrow-overlap)) * 1.8);
       z-index: 6;
       color: var(--text-dark);
     }
@@ -146,10 +149,35 @@
       text-decoration: none;
     }
 
+    .goal-note {
+      position: absolute;
+      left: calc(var(--row-width) + 12px);
+      top: calc(var(--arrow-top) + var(--title-line-y) - 14px);
+      width: calc(var(--right-space) - 12px);
+      z-index: 6;
+      color: var(--text-dark);
+    }
+
+    .goal-title {
+      margin: 0 0 4px;
+      font-family: var(--phase-title-font);
+      font-size: clamp(20.8px, 2.36vw, 28.8px);
+      line-height: 1;
+      color: var(--cape-red);
+    }
+
+    .goal-copy {
+      margin: 0;
+      font-size: clamp(13px, 1.35vw, 16px);
+      line-height: 1.18;
+      font-weight: 400;
+      color: #000;
+    }
+
     .timeline-row {
       position: absolute;
       left: 0;
-      right: 0;
+      width: var(--row-width);
       top: 40%;
       transform: translateY(-50%);
       z-index: 2;
@@ -345,8 +373,8 @@
 
     .detail-phase-5 {
       left: calc((var(--arrow-width) - var(--arrow-overlap)) * 4 + var(--inner-left));
-      width: calc(var(--arrow-width) - var(--inner-left));
-      max-width: calc(var(--arrow-width) - var(--inner-left));
+      width: calc(var(--arrow-width) - var(--inner-left) + var(--right-space) - 12px);
+      max-width: calc(var(--arrow-width) - var(--inner-left) + var(--right-space) - 12px);
     }
 
     .detail-block p {
@@ -390,6 +418,11 @@
           and
           <a href="https://teams.microsoft.com/l/chat/0/0?users=vcollins@americares.org" target="_blank" rel="noopener noreferrer">Blackbaud Admin</a>
         </p>
+      </div>
+
+      <div class="goal-note">
+        <p class="goal-title">Goal</p>
+        <p class="goal-copy">utilize data from Phase 5 to inform Phase 1, creating a cyclical process</p>
       </div>
 
       <div class="timeline-row">
@@ -463,11 +496,7 @@
         <div class="detail-block detail-phase-2" data-detail-panel="phase-2">
           <p>Where are you getting the funds?</p>
           <p>Request funds from donors</p>
-          <p>
-            <a href="https://americares.sharepoint.com/:b:/g/acteams/Finance/IQCFpUnVMSypToA8inpEadADAeU1X_i5RepZryRvOI4ZJRo?e=YCgDfI" target="_blank" rel="noopener noreferrer">
-              Request ERPx funding source
-            </a>
-          </p>
+          <p><a href="https://americares.sharepoint.com/:b:/g/acteams/Finance/IQCFpUnVMSypToA8inpEadADAeU1X_i5RepZryRvOI4ZJRo?e=YCgDfI" target="_blank" rel="noopener noreferrer">Request ERPx funding source</a></p>
         </div>
 
         <div class="detail-block detail-phase-3" data-detail-panel="phase-3">
