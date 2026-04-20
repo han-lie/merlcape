@@ -236,7 +236,48 @@
     }
 
     .hover-detail {
-      display: none;
+      position: absolute;
+      top: calc(var(--quote-top) + 54px);
+      left: var(--inner-left);
+      width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left) - var(--inner-right));
+      max-width: calc(var(--arrow-width) * 2 - var(--arrow-overlap) - var(--inner-left) - var(--inner-right));
+      font-size: clamp(13px, 1.35vw, 16px);
+      line-height: 1.14;
+      font-weight: 700;
+      color: var(--text-dark);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .hover-detail-wide {
+      width: calc(var(--arrow-width) * 2 - var(--inner-left));
+      max-width: calc(var(--arrow-width) * 2 - var(--inner-left));
+    }
+
+    .phase-col.hovering .hover-detail,
+    .phase-col:focus-within .hover-detail {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .phase-4 .hover-detail,
+    .phase-5 .hover-detail {
+      color: var(--text-light);
+    }
+
+    .hover-detail p {
+      margin: 0 0 10px;
+    }
+
+    .hover-detail a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
     }
   </style>
 </head>
@@ -270,6 +311,15 @@
               <p class="phase-subtitle">Proposal Development Phase</p>
             </div>
           </div>
+          <div class="hover-detail">
+            <p>Where are you getting the funds?</p>
+            <p>Request funds from donors</p>
+            <p>
+              <a href="https://americares.sharepoint.com/:b:/g/acteams/Finance/IQCFpUnVMSypToA8inpEadADAeU1X_i5RepZryRvOI4ZJRo?e=YCgDfI" target="_blank" rel="noopener noreferrer">
+                Request ERPx funding source
+              </a>
+            </p>
+          </div>
         </article>
 
         <article class="phase-col phase-3" data-delay="900">
@@ -294,6 +344,28 @@
               <h2 class="phase-title">CAPE Phase 4</h2>
               <p class="phase-subtitle">Implementation &amp; Monitoring Phase</p>
             </div>
+          </div>
+          <div class="hover-detail hover-detail-wide">
+            <p>
+              <a href="https://americares.outsystemsenterprise.com/UserMaintenance/AMCUsers.aspx" target="_blank" rel="noopener noreferrer">
+                1. Request Tableau access if needed
+              </a>
+            </p>
+            <p>
+              <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
+                2. Confirm and correct Project details in org-wide dashboards
+              </a>
+            </p>
+            <p>
+              <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
+                3. For TA Projects: enter Activity-level data in Scope Activity app at Activity end (do not wait for Project end)
+              </a>
+            </p>
+            <p>
+              <a href="https://apps.powerapps.com/play/e/65c7927b-ffa2-e83c-bd6b-cfe914261614/a/7bbcbc2f-144e-47c8-bf34-da6065fd33ce?tenantId=c3d2c9ac-5362-458b-8234-1863e0e7bfc6&hint=60b5c06b-8b6c-4e9d-a686-d26e2ff8c56b&sourcetime=1752700816547" target="_blank" rel="noopener noreferrer">
+                4. For TA Projects: Monitor Activity data in dashboard to ensure accuracy and timeliness
+              </a>
+            </p>
           </div>
         </article>
 
@@ -320,6 +392,9 @@
         window.setTimeout(() => {
           phase.classList.add("visible");
         }, delay);
+
+        phase.addEventListener("mouseenter", () => phase.classList.add("hovering"));
+        phase.addEventListener("mouseleave", () => phase.classList.remove("hovering"));
       });
     })();
   </script>
